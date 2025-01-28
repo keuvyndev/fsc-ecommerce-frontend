@@ -1,10 +1,5 @@
 {
-   "*.ts": [
-      "yarn standard --fix",
-      "git add ."
-   ],
-   "*.tsx": [
-      "yarn standard --fix",
-      "git add ."
+   "*.{ts,tsx}": [
+      "yarn eslint --fix"
    ]
 }
