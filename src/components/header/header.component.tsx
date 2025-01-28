@@ -1,7 +1,8 @@
 import { BsCart3 } from "react-icons/bs";
-
-import { HeaderContainer, HeaderItem, HeaderItems, HeaderTitle } from "./header.styles";
 import { useNavigate } from "react-router-dom";
+
+// Styles
+import { HeaderContainer, HeaderItem, HeaderItems, HeaderTitle } from "./header.styles";
 
 const Header = () => {  
 
