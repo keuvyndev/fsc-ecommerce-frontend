@@ -64,3 +64,10 @@
    - yarn add react-icons
    - yarn add react-router-dom
    - yarn add axios
+   - (Styled Components) yarn add styled-components 
+   - (Styled Components) yarn add -D @types/styled-components
+   - (Styled Components) Extensão VSCode: vscode-styled-components
+   - (Styled Components) Extensão VSCode: styled-components-snippets
+
+> Snippet
+   - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)
