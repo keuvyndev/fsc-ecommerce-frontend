@@ -68,6 +68,7 @@
    - (Styled Components) yarn add -D @types/styled-components
    - (Styled Components) Extensão VSCode: vscode-styled-components
    - (Styled Components) Extensão VSCode: styled-components-snippets
+   - yarn add react-hook-form
 
 > Snippet
    - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)
