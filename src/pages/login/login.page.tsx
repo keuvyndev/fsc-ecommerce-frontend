@@ -21,9 +21,13 @@ const LoginPage = () => {
                <CustomButton startIcon={<BsGoogle size={25} />}>Entrar com o Google</CustomButton>
 
                {/* Button */}
-               <LogininputContainer>{/*E-mail input */}</LogininputContainer>
+               <LogininputContainer>
+                  <p>E-mail</p>
+                  </LogininputContainer>
                <CustomInput placeholder='Digite seu e-mail' />
-               <LogininputContainer>{/*Password input */}</LogininputContainer>
+               <LogininputContainer>
+                  <p>Senha</p>
+                  </LogininputContainer>
                <CustomInput placeholder='Digite sua senha' />
 
                {/* Button */}
