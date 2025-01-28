@@ -20,3 +20,6 @@ Configuração do Projeto
 ```
 
 4.3: npx husky init
+4.4: Adicionada linha no arquivo "pre-commit": yarn lint-staged
+5: yarn add -D git-commit-msg-linter
+5.1: npx husky add .husky/commit-msg ".git/hooks/commit-msg \\$1"
