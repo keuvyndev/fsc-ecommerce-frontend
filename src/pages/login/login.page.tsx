@@ -7,6 +7,7 @@ import Header from "../../components/header/header.component"
 
 // Styles
 import { LoginContainer, LoginContent, LoginHeadline, LogininputContainer, LoginSubtitle } from "./login.styles";
+import CustomInput from '../../components/custom-input/custom-input.component';
 
 const LoginPage = () => {
    return ( 
@@ -21,10 +22,12 @@ const LoginPage = () => {
 
                {/* Button */}
                <LogininputContainer>{/*E-mail input */}</LogininputContainer>
+               <CustomInput placeholder='Digite seu e-mail' />
                <LogininputContainer>{/*Password input */}</LogininputContainer>
+               <CustomInput placeholder='Digite sua senha' />
 
                {/* Button */}
-               <CustomButton startIcon={<FiLogIn size={18} />}>Entrar </CustomButton>
+               <CustomButton startIcon={<FiLogIn size={18} />}>Entrar</CustomButton>
             </LoginContent>
          </LoginContainer>
       </>
