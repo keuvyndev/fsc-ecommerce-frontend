@@ -6,7 +6,7 @@ import Category from '../../types/category.types';
 import env from '../../config/env.config';
 
 // Styles
-import './categories.style.css'
+import './categories.styles.css'
 
 const Categories = () => {
    const [categories, setCategories] = useState<Category[]>([])
