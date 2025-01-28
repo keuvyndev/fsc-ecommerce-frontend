@@ -1,0 +1,10 @@
+{
+   "*.ts": [
+      "yarn standard --fix",
+      "git add ."
+   ],
+   "*.tsx": [
+      "yarn standard --fix",
+      "git add ."
+   ]
+}
