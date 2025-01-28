@@ -62,3 +62,4 @@
 
 > Dependencias do projeto
    - yarn add react-icons
+   - yarn add react-router-dom
