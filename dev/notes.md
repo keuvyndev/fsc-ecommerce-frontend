@@ -1,7 +1,7 @@
 Configuração do Projeto
 
 - yarn create react-app --template typescript .
-- yarn add -D eslint eslint-config-prettier eslint-plugin-prettier eslint-plugin-react eslint-plugin-react-hooks typescript-eslint/eslint-plugin typescript-eslint/parser prettier prettier-plugin-tailwindcss
+- yarn add -D eslint eslint-config-prettier eslint-config-react-app eslint-plugin-prettier eslint-plugin-react eslint-plugin-react-hooks typescript-eslint/eslint-plugin typescript-eslint/parser prettier prettier-plugin-tailwindcss
 - yarn eslint -- init
 
 - Crie e configure o arquivo "prettierrc.json":
@@ -30,36 +30,16 @@ import globals from "globals";
 import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
-import eslintConfigPrettier from "eslint-config-prettier";
+
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
-  {
-    files: ["**/*.{js,mjs,cjs,ts,tsx}"], // Aplica a configuração para os arquivos JS/TSX
-  },
-  {
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
-    },
-  },
+  { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
+  { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommended, // Regras recomendadas para TypeScript
-  pluginReact.configs.recommended, // Regras recomendadas para React
-  {
-    settings: {
-      react: {
-        version: "detect", // Detecta automaticamente a versão do React
-      },
-    },
-    rules: {
-      "react/react-in-jsx-scope": "off", // Não é mais necessário importar React desde o React 17
-      "prettier/prettier": "error", // Mostra erros do Prettier como erros do ESLint
-    },
-  },
-  eslintConfigPrettier, // Desativa regras que entram em conflito com o Prettier
+  ...tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
+  pluginReact.configs.flat['jsx-runtime'],
 ];
 ```
 
