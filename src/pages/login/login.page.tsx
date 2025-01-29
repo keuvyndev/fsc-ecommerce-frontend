@@ -12,9 +12,14 @@ import CustomInput from '../../components/custom-input/custom-input.component';
 // Styles
 import { LoginContainer, LoginContent, LoginHeadline, LogininputContainer, LoginSubtitle } from "./login.styles";
 
+interface LoginForm {
+   email: string;
+   password: string;
+}
+
 const LoginPage = () => {
 
-   const { register, formState: { errors }, handleSubmit } = useForm();
+   const { register, formState: { errors }, handleSubmit } = useForm<LoginForm>();
 
    // Só chama esta função caso não existam erros
    // eslint-disable-next-line @typescript-eslint/no-explicit-any
