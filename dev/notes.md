@@ -71,6 +71,7 @@
    - yarn add react-hook-form
    - yarn add validator
       - yarn add -D @types/validator
+   - yarn add firebase
 
 > Snippet
    - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)
