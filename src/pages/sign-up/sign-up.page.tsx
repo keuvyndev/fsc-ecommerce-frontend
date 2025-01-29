@@ -15,9 +15,12 @@ import {
   SignUpInputContainer
 } from './sign-up.styles'
 import CustomButton from '../../components/custom-button/custom-buttom.component'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth, db } from '../../config/firebase.config'
+import { addDoc, collection } from 'firebase/firestore'
 
 interface SignUpForm {
-  name: string
+  firstName: string
   lastName: string
   email: string
   password: string
@@ -34,8 +37,20 @@ const SignUpPage = () => {
 
   const watchPassword = watch('password')
 
-  const handleSubmitPress = (data: SignUpForm) => {
-    console.log({ data })
+  const handleSubmitPress = async (data: SignUpForm) => {
+    try {
+
+      // Cria um usuário na Firebase e insere credenciais no FireStore
+      const userCredentials = await createUserWithEmailAndPassword(auth, data.email, data.password)
+      await addDoc(collection(db, 'users'), {
+        id: userCredentials.user.uid,
+        email: userCredentials.user.email,
+        firstName: data.firstName,
+        lastNAme: data.lastName
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -49,12 +64,12 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Nome</p>
             <CustomInput
-              hasError={!!errors?.name}
+              hasError={!!errors?.firstName}
               placeholder="Digite seu nome"
-              {...register('name', { required: true })}
+              {...register('firstName', { required: true })}
             />
 
-            {errors?.name?.type === 'required' && (
+            {errors?.firstName?.type === 'required' && (
               <InputErrorMessage>O nome é obrigatório.</InputErrorMessage>
             )}
           </SignUpInputContainer>
