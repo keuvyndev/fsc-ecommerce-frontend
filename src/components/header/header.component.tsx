@@ -16,10 +16,14 @@ const Header = () => {
       navigate('/sign-up')
    }
 
+   const handleHomeClick = () => {
+      navigate('/')
+   }
+
   return (
    <>
       <HeaderContainer>
-         <HeaderTitle> CLUB CLOTHING </HeaderTitle>
+         <HeaderTitle onClick={handleHomeClick}> CLUB CLOTHING </HeaderTitle>
 
          <HeaderItems>
             <HeaderItem>Explorar</HeaderItem>

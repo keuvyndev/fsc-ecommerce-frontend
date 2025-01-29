@@ -13,6 +13,10 @@ export const HeaderContainer = styled.div`
 export const HeaderTitle = styled.h2`
    font-size: 1.5rem;
    font-weight: bold;
+
+   &:hover {
+      cursor: pointer;
+   }
 `;
 
 export const HeaderItems = styled.div`
