@@ -71,7 +71,8 @@
    - yarn add react-hook-form
    - yarn add validator
       - yarn add -D @types/validator
-   - yarn add firebase
+   - yarn add firebase (Requer configuração adicional do firebase.config.ts)
+      - node src/scripts/firestore-script.js (Executa o script firestore.js)
 
 > Snippet
    - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)
