@@ -3,11 +3,18 @@ import { BsGoogle } from 'react-icons/bs'
 import { FiLogIn } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
 import validator from 'validator'
+import { userContext } from '../../context/user.context'
+import { useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AuthError, AuthErrorCodes, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import { auth, db, googleProvider } from '../../config/firebase.config'
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 
 // Components
 import CustomInput from '../../components/custom-input/custom-input.component'
 import Header from '../../components/header/header.component'
 import InputErrorMessage from '../../components/input-error-message/input-error-message.component'
+import CustomButton from '../../components/custom-button/custom-buttom.component'
 
 // Styles
 import {
@@ -17,10 +24,6 @@ import {
   LoginInputContainer,
   LoginSubtitle
 } from './login.styles'
-import CustomButton from '../../components/custom-button/custom-buttom.component'
-import { AuthError, AuthErrorCodes, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
-import { auth, db, googleProvider } from '../../config/firebase.config'
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 
 interface LoginForm {
   email: string
@@ -28,6 +31,16 @@ interface LoginForm {
 }
 
 const LoginPage = () => {
+
+  const {isAuthenticated} = useContext(userContext);
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if(isAuthenticated){
+      navigate('/')
+    }
+  },[isAuthenticated])
+
   const {
     register,
     handleSubmit,
