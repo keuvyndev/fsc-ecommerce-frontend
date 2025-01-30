@@ -18,6 +18,8 @@ import {
   LoginSubtitle
 } from './login.styles'
 import CustomButton from '../../components/custom-button/custom-buttom.component'
+import { AuthError, AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../config/firebase.config'
 
 interface LoginForm {
   email: string
@@ -28,11 +30,25 @@ const LoginPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    setError
   } = useForm<LoginForm>()
 
-  const handleSubmitPress = (data: any) => {
-    console.log({ data })
+  // Efetua o Login do usuário no Firebase
+  const handleSubmitPress = async (data: any) => {
+    try {
+      const userCredentials = await signInWithEmailAndPassword(auth, data.email, data.password);
+      console.log(userCredentials)
+    } catch (error) {
+      const _error = error as AuthError
+      if(_error.code === AuthErrorCodes.INVALID_PASSWORD){
+        return setError('password', {type: 'mismatch'})
+      } 
+      
+      if (_error.code === AuthErrorCodes.USER_DELETED){
+        return setError('email', {type: 'notFound'})
+      }
+    }
   }
 
   return (
@@ -71,6 +87,12 @@ const LoginPage = () => {
                 Por favor, insira um e-mail válido.
               </InputErrorMessage>
             )}
+
+            {errors?.email?.type === 'notFound' && (
+              <InputErrorMessage>
+                O e-mail não foi encontrado.
+              </InputErrorMessage>
+            )}
           </LoginInputContainer>
 
           <LoginInputContainer>
@@ -84,6 +106,9 @@ const LoginPage = () => {
 
             {errors?.password?.type === 'required' && (
               <InputErrorMessage>A senha é obrigatória.</InputErrorMessage>
+            )}
+            {errors?.password?.type === 'mismatch' && (
+              <InputErrorMessage>A senha está incorreta.</InputErrorMessage>
             )}
           </LoginInputContainer>
 
