@@ -1,5 +1,6 @@
 interface User {
-   fisrtName: string,
+   id: string,
+   firstName: string,
    lastName: string,
    email: string,
    provider: 'firebase' | 'google'

@@ -12,6 +12,7 @@ import SignUpPage from "./pages/sign-up/sign-up.page"
 import {auth, db} from './config/firebase.config'
 import { userContext } from "./context/user.context"
 import { useContext, useState } from "react"
+import { userConverter } from "./converters/firestore.converters"
 
 const App = () => {
 
@@ -32,10 +33,9 @@ const App = () => {
     // Caso o usuário não esteja autenticado, mas possua dados de usuário da Firebase: Loga
     const isSigningIn = !isAuthenticated && user
     if(isSigningIn){
-      const querySnapshot = await getDocs(query(collection(db,'users'), where('id', '==',user.uid)))
+      const querySnapshot = await getDocs(query(collection(db,'users').withConverter(userConverter), where('id', '==',user.uid)))
       const userFromFirestore = querySnapshot.docs[0]?.data()
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      loginUser(userFromFirestore as any)
+      loginUser(userFromFirestore)
       return setIsInitializing(false) 
     }
 
