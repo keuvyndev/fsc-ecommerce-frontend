@@ -13,6 +13,7 @@ import {auth, db} from './config/firebase.config'
 import { userContext } from "./context/user.context"
 import { useContext, useState } from "react"
 import { userConverter } from "./converters/firestore.converters"
+import { LoadingContainer } from "./components/loading/loading.styles"
 
 const App = () => {
 
@@ -43,7 +44,7 @@ const App = () => {
   })
 
   // Garante que a aplicação só será mostrada após inicializar
-  if (isInitializing) return null;
+  if (isInitializing) return <LoadingContainer />;
 
   return (
     <BrowserRouter>

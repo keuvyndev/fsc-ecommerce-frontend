@@ -76,6 +76,7 @@
    - (Fire Base) E-mail and Password provider
    - (Fire Base) Google provider
    - Context API
+   - yarn add react-spinners
 
 > Snippet
    - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)
