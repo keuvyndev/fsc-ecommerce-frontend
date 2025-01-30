@@ -73,6 +73,8 @@
       - yarn add -D @types/validator
    - yarn add firebase (Requer configuração adicional do firebase.config.ts)
       - node src/scripts/firestore-script.js (Executa o script firestore.js)
+   - (Fire Base) E-mail and Password provider
+   - (Fire Base) Google provider
 
 > Snippet
    - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)
