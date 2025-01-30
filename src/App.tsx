@@ -11,9 +11,11 @@ import SignUpPage from "./pages/sign-up/sign-up.page"
 // Utilities
 import {auth, db} from './config/firebase.config'
 import { userContext } from "./context/user.context"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 
 const App = () => {
+
+  const [isInitializing, setIsInitializing] = useState(true);
 
   const { isAuthenticated, loginUser, logoutUser } = useContext(userContext)
 
@@ -23,7 +25,8 @@ const App = () => {
     // Caso o usuário esteja autenticado, mas não possua dados de usuário da Firebase: Desloga
     const isSigninOut = isAuthenticated && !user
     if(isSigninOut){
-      return logoutUser()
+      logoutUser()
+      return setIsInitializing(true)
     }
 
     // Caso o usuário não esteja autenticado, mas possua dados de usuário da Firebase: Loga
@@ -32,10 +35,15 @@ const App = () => {
       const querySnapshot = await getDocs(query(collection(db,'users'), where('id', '==',user.uid)))
       const userFromFirestore = querySnapshot.docs[0]?.data()
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return loginUser(userFromFirestore as any)
+      loginUser(userFromFirestore as any)
+      return setIsInitializing(false) 
     }
 
+    return setIsInitializing(false) 
   })
+
+  // Garante que a aplicação só será mostrada após inicializar
+  if (isInitializing) return null;
 
   return (
     <BrowserRouter>
