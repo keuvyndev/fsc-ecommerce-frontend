@@ -4,7 +4,7 @@ import { FiLogIn } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
 import validator from 'validator'
 import { userContext } from '../../context/user.context'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthError, AuthErrorCodes, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { auth, db, googleProvider } from '../../config/firebase.config'
@@ -15,6 +15,7 @@ import CustomInput from '../../components/custom-input/custom-input.component'
 import Header from '../../components/header/header.component'
 import InputErrorMessage from '../../components/input-error-message/input-error-message.component'
 import CustomButton from '../../components/custom-button/custom-buttom.component'
+import Loading from '../../components/loading/loading.component'
 
 // Styles
 import {
@@ -32,6 +33,7 @@ interface LoginForm {
 
 const LoginPage = () => {
 
+  const [isLoading, setIsLoading] = useState(false);
   const {isAuthenticated} = useContext(userContext);
   const navigate = useNavigate()
 
@@ -51,6 +53,7 @@ const LoginPage = () => {
   // Efetua o Login do usuário no Firebase
   const handleSubmitPress = async (data: any) => {
     try {
+      setIsLoading(true)
       const userCredentials = await signInWithEmailAndPassword(auth, data.email, data.password);
       console.log(userCredentials)
     } catch (error) {
@@ -62,12 +65,15 @@ const LoginPage = () => {
       if (_error.code === AuthErrorCodes.USER_DELETED){
         return setError('email', {type: 'notFound'})
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
   // Efetua login com o google usando Firebase
   const handleSignInWithGoogleProvider = async () => {
     try {
+      setIsLoading(true)
       const userCredentials = await signInWithPopup(auth, googleProvider);
       const querySnapshot = await getDocs(query(collection(db, 'users'), where('id','==',userCredentials.user.uid)))
       const user = querySnapshot.docs[0]?.data()
@@ -82,12 +88,16 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
     <>
       <Header />
+
+      {isLoading && <Loading /> }
 
       <LoginContainer>
         <LoginContent>

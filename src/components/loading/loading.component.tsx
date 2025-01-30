@@ -1,7 +1,7 @@
 import { LoadingContainer } from "./loading.styles"
 import SyncLoader from 'react-spinners/SyncLoader'
 
-const LoadingComponent = () => {
+const Loading = () => {
    return ( 
       <LoadingContainer>
          <SyncLoader size={30} />
@@ -9,4 +9,4 @@ const LoadingComponent = () => {
    );
 }
  
-export default LoadingComponent;
+export default Loading;
