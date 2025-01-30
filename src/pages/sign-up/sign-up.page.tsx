@@ -4,7 +4,7 @@ import validator from 'validator'
 import { AuthError, AuthErrorCodes, createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth, db } from '../../config/firebase.config'
 import { addDoc, collection } from 'firebase/firestore'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { userContext } from '../../context/user.context'
 
@@ -13,6 +13,7 @@ import CustomInput from '../../components/custom-input/custom-input.component'
 import Header from '../../components/header/header.component'
 import InputErrorMessage from '../../components/input-error-message/input-error-message.component'
 import CustomButton from '../../components/custom-button/custom-buttom.component'
+import Loading from '../../components/loading/loading.component'
 
 // Styles
 import {
@@ -31,7 +32,7 @@ interface SignUpForm {
 }
 
 const SignUpPage = () => {
-
+  const [isLoading, setIsLoading] = useState(false);
   const {isAuthenticated} = useContext(userContext);
   const navigate = useNavigate()
 
@@ -53,7 +54,7 @@ const SignUpPage = () => {
 
   const handleSubmitPress = async (data: SignUpForm) => {
     try {
-
+      setIsLoading(true)
       // Cria um usuário na Firebase e insere credenciais no FireStore
       const userCredentials = await createUserWithEmailAndPassword(auth, data.email, data.password)
       await addDoc(collection(db, 'users'), {
@@ -68,12 +69,16 @@ const SignUpPage = () => {
       if(_error.code === AuthErrorCodes.EMAIL_EXISTS){
         return setError('email', {type: 'alreadyInUse'})
       }
+    } finally{
+      setIsLoading(false)
     }
   }
 
   return (
     <>
       <Header />
+
+      {isLoading && <Loading />}
 
       <SignUpContainer>
         <SignUpContent>
