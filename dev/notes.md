@@ -75,6 +75,10 @@
       - node src/scripts/firestore-script.js (Executa o script firestore.js)
    - (Fire Base) E-mail and Password provider
    - (Fire Base) Google provider
+   - Context API
 
 > Snippet
    - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)
+
+> Hooks Novos
+- useContext: Permite usar contextos nos componentes.
