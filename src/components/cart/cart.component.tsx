@@ -1,16 +1,19 @@
+import { useContext } from 'react';
 import {BsCartCheck} from 'react-icons/bs'
 
 // Components
 import CustomButton from "../custom-button/custom-buttom.component";
+import CartItem from '../cart-item/cart-item.component';
+
+// Utilities
+import { CartContext } from '../../context/cart.context';
 
 // Styles
 import { CartContainer, CartContent, CartEscapeArea, CartTitle, CartTotal } from "./cart.styles";
-import { useContext } from 'react';
-import { CartContext } from '../../context/cart.context';
 
 const Cart = () => {
 
-   const {isVisible, toggleCart} = useContext(CartContext)
+   const {isVisible, toggleCart, products} = useContext(CartContext)
 
    return ( 
       <>
@@ -18,9 +21,7 @@ const Cart = () => {
             <CartEscapeArea onClick={toggleCart} />
                <CartContent>
                   <CartTitle> Seu carrinho </CartTitle>
-
-                     {/* produtos */}
-
+                     {products.map((product) => <CartItem key={product.id} product={product}/>)}
                   <CartTotal>R$ 999,00</CartTotal>
                   <CustomButton startIcon={<BsCartCheck />}>Ir para o Checkout</CustomButton>
                </CartContent>
