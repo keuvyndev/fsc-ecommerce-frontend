@@ -78,6 +78,7 @@
    - Context API
    - yarn add react-spinners
    - Local Storage
+   - Stripe integration for payments
 
 > Snippet
    - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)

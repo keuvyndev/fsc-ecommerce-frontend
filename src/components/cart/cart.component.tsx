@@ -10,10 +10,17 @@ import { CartContext } from '../../context/cart.context';
 
 // Styles
 import { CartContainer, CartContent, CartEscapeArea, CartTitle, CartTotal } from "./cart.styles";
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
 
    const {isVisible, toggleCart, products, productsTotalPrice, productsCount} = useContext(CartContext)
+   const navigate = useNavigate();
+
+   const handleGoToCheckout = () => {
+      toggleCart()
+      navigate('/checkout')
+   }
 
    return ( 
       <>
@@ -26,7 +33,7 @@ const Cart = () => {
                      {productsCount > 0 ?
                            <>
                               <CartTotal>Total: R$ {productsTotalPrice}</CartTotal>
-                              <CustomButton startIcon={<BsCartCheck />}>Ir para o Checkout</CustomButton>
+                              <CustomButton startIcon={<BsCartCheck />} onClick={handleGoToCheckout}>Ir para o Checkout</CustomButton>
                            </>
                      : (<p>Seu carrinho está vazio!</p>)}
                </CartContent>
