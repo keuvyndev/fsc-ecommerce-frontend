@@ -77,6 +77,7 @@
    - (Fire Base) Google provider
    - Context API
    - yarn add react-spinners
+   - Local Storage
 
 > Snippet
    - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)

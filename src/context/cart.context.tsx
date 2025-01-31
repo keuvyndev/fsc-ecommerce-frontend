@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 import CartProduct from "../types/cart.types";
 import Product from "../types/product.types";
 
@@ -33,6 +33,17 @@ interface Props{
 export const CartContextProvider: React.FC<Props> = ({children}) => {
    const [isVisible, setIsVisible] = useState(false)
    const [products, setProducts] = useState<CartProduct[]>([]);
+
+   // Recarrega os produtos salvos sempre que o componente for montado
+   useEffect(()=>{
+      const productsFromLocalStore = localStorage.getItem('cartProducts')!
+      setProducts(JSON.parse(productsFromLocalStore))
+   }, [])
+
+   // Quando um produto é alterado os dados são salvos novamente no local storage
+   useEffect(()=>{
+      localStorage.setItem('cartProducts', JSON.stringify(products))
+   }, [products])
 
    // A função é executada sempre que o componente é renderizado novamente
    // O useMemo garante que ela seja executada somente se a lista de produtos mudar
