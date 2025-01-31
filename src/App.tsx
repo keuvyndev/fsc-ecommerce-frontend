@@ -18,6 +18,7 @@ import { userConverter } from "./converters/firestore.converters"
 // Components
 import Loading from "./components/loading/loading.component"
 import CategoriesDetailsPage from "./pages/categories-details/categories-details.page"
+import Cart from "./components/cart/cart.component"
 
 const App = () => {
 
@@ -59,6 +60,8 @@ const App = () => {
         <Route path='/explore' element={<ExplorePage />} />
         <Route path='/category/:id' element={<CategoriesDetailsPage />} />
       </Routes>
+
+      <Cart />
     </BrowserRouter> 
   )
 } 
