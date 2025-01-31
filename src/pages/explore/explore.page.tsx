@@ -1,4 +1,4 @@
-import CategoriesOverview from "../../components/categores-overview/categories-overview.component";
+import CategoriesOverview from "../../components/categories-overview/categories-overview.component";
 import Header from "../../components/header/header.component";
 
 
