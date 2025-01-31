@@ -5,6 +5,7 @@ import Product from "../types/product.types";
 interface ICartContext{
    isVisible: boolean,
    productsTotalPrice: number,
+   productsCount: number,
    products: CartProduct[],
    toggleCart: () => void,
    addProductToCart: (product:Product) => void
@@ -16,6 +17,7 @@ interface ICartContext{
 export const CartContext = createContext<ICartContext>({
    isVisible: false,
    productsTotalPrice: 0,
+   productsCount: 0,
    products: [],
    toggleCart: () => {},
    addProductToCart: () => {},
@@ -38,7 +40,13 @@ export const CartContextProvider: React.FC<Props> = ({children}) => {
       return products.reduce((acc, product) => {
          return acc + (product.price * product.quantity)
       }, 0)
-   }, products)
+   }, [products])
+
+   const productsCount = useMemo(() => {
+      return products.reduce((acc, item) => {
+         return acc + item.quantity
+      },0)
+   }, [products])
 
    // Seta o valor inverso do valor anterior
    const toggleCart = () => {
@@ -75,7 +83,7 @@ export const CartContextProvider: React.FC<Props> = ({children}) => {
    ).filter((product) => product.quantity > 0))
 
    return (
-      <CartContext.Provider value={{isVisible, products, productsTotalPrice, toggleCart, addProductToCart, removeProductToCart, increaseProductQuantity, decreaseProductQuantity}}>
+      <CartContext.Provider value={{isVisible, products, productsTotalPrice, productsCount, toggleCart, addProductToCart, removeProductToCart, increaseProductQuantity, decreaseProductQuantity}}>
          {children}
       </CartContext.Provider>
    )
