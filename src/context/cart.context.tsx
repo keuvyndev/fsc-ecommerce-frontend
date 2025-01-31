@@ -31,7 +31,17 @@ export const CartContextProvider: React.FC<Props> = ({children}) => {
 
    const addProductToCart = (product: Product) => {
       
-      setProducts((prevState) => [...prevState, {...product, quantity: 1}])
+      // Verifica se o produto já está no carrinho
+      const productIsAlreadyInCart = products.some((item) => item.id === product.id)
+
+      if(productIsAlreadyInCart){
+         return setProducts(products => products.map((item) => 
+
+         // Ao identificar o item incrementa, caso não seja o item, o mantém na lista
+         item.id === product.id ? {...item, quantity: item.quantity + 1} : {... item}));
+      }
+
+      return setProducts((prevState) => [...prevState, {...product, quantity: 1}])
    }
 
    return (
