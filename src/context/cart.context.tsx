@@ -7,6 +7,7 @@ interface ICartContext{
    products: CartProduct[],
    toggleCart: () => void,
    addProductToCart: (product:Product) => void
+   removeProductToCart: (productId: string) => void
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -14,6 +15,7 @@ export const CartContext = createContext<ICartContext>({
    products: [],
    toggleCart: () => {},
    addProductToCart: () => {},
+   removeProductToCart: () => {},
 })
 
 interface Props{
@@ -44,8 +46,15 @@ export const CartContextProvider: React.FC<Props> = ({children}) => {
       return setProducts((prevState) => [...prevState, {...product, quantity: 1}])
    }
 
+   const removeProductToCart = (productId: string) => {
+      setProducts(products => products.filter((product) => {
+         return product.id !== productId;
+      }))
+   }
+
+
    return (
-      <CartContext.Provider value={{isVisible, products, toggleCart, addProductToCart}}>
+      <CartContext.Provider value={{isVisible, products, toggleCart, addProductToCart, removeProductToCart}}>
          {children}
       </CartContext.Provider>
    )
