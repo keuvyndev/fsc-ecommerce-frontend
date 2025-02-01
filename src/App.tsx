@@ -21,6 +21,7 @@ import CategoriesDetailsPage from "./pages/categories-details/categories-details
 import Cart from "./components/cart/cart.component"
 import CheckoutPage from "./pages/checkout/checkout.page"
 import AuthenticationGuard from "./components/guard/authentication.guard"
+import PaymentConfirmationPage from "./pages/payment-confirmation/payment-confirmation"
 
 const App = () => {
 
@@ -61,6 +62,7 @@ const App = () => {
         <Route path='/sign-up' element={<SignUpPage />} />
         <Route path='/explore' element={<ExplorePage />} />
         <Route path='/category/:id' element={<CategoriesDetailsPage />} />
+        <Route path='/payment-confirmation' element={<PaymentConfirmationPage />} />
 
         {/* Protege a rota de Checkout deixando-o como componente filho */}
         <Route path='/checkout' element={<AuthenticationGuard><CheckoutPage /></AuthenticationGuard>} />
