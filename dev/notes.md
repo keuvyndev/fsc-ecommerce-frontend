@@ -79,6 +79,9 @@
    - yarn add react-spinners
    - Local Storage
    - Stripe integration for payments
+   - React Redux: 
+      - yarn add redux react-redux
+      - yarn add -D @types/react-redux
 
 > Snippet
    - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)
