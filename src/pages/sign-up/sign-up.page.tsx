@@ -4,9 +4,8 @@ import validator from 'validator'
 import { AuthError, AuthErrorCodes, createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth, db } from '../../config/firebase.config'
 import { addDoc, collection } from 'firebase/firestore'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { userContext } from '../../context/user.context'
 
 // Components
 import CustomInput from '../../components/custom-input/custom-input.component'
@@ -22,6 +21,7 @@ import {
   SignUpHeadline,
   SignUpInputContainer
 } from './sign-up.styles'
+import { useSelector } from 'react-redux'
 
 interface SignUpForm {
   firstName: string
@@ -33,7 +33,8 @@ interface SignUpForm {
 
 const SignUpPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const {isAuthenticated} = useContext(userContext);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const {isAuthenticated} = useSelector((rootReducer: any) => rootReducer.userReducer)
   const navigate = useNavigate()
 
   useEffect(()=>{

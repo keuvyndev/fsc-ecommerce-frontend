@@ -3,8 +3,7 @@ import { BsGoogle } from 'react-icons/bs'
 import { FiLogIn } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
 import validator from 'validator'
-import { userContext } from '../../context/user.context'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthError, AuthErrorCodes, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { auth, db, googleProvider } from '../../config/firebase.config'
@@ -25,6 +24,7 @@ import {
   LoginInputContainer,
   LoginSubtitle
 } from './login.styles'
+import { useSelector } from 'react-redux'
 
 interface LoginForm {
   email: string
@@ -34,7 +34,7 @@ interface LoginForm {
 const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
-  const {isAuthenticated} = useContext(userContext);
+  const {isAuthenticated} = useSelector((rootReducer: any) => rootReducer.userReducer)
   const navigate = useNavigate()
 
   useEffect(()=>{

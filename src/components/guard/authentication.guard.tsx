@@ -1,12 +1,12 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Utilities
-import { userContext } from "../../context/user.context";
 
 // Components
 import Header from "../header/header.component";
 import Loading from "../loading/loading.component";
+import { useSelector } from "react-redux";
 
 interface AuthenticationPageProps{
    children: React.ReactNode
@@ -14,7 +14,8 @@ interface AuthenticationPageProps{
 
 const AuthenticationGuard:React.FC<AuthenticationPageProps> = ({children}) => {
 
-   const {isAuthenticated} = useContext(userContext)
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   const {isAuthenticated} = useSelector((rootReducer: any) => rootReducer.userReducer)
    const navigate = useNavigate()
 
    useEffect(() => {

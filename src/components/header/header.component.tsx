@@ -1,19 +1,22 @@
 import { BsCart3 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { signOut } from "firebase/auth";
-
-// Utilities
-import { auth } from "../../config/firebase.config";
-import { userContext } from "../../context/user.context";
 
 // Styles
 import { HeaderContainer, HeaderItem, HeaderItems, HeaderTitle } from "./header.styles";
 import { CartContext } from "../../context/cart.context";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebase.config";
 
 const Header = () => {  
 
-   const { isAuthenticated } = useContext(userContext)
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   const {isAuthenticated} = useSelector((rootReducer:any) => rootReducer.userReducer);
+   const dispatch = useDispatch();
+
+
    const {toggleCart, productsCount} = useContext(CartContext);
 
    const navigate = useNavigate();
@@ -34,6 +37,11 @@ const Header = () => {
       navigate('/explore')
    }
 
+   const handleSignOutClick = () => {
+      dispatch({type: 'LOGOUT_USER'})
+      signOut(auth)
+   }
+
   return (
    <>
       <HeaderContainer>
@@ -48,7 +56,7 @@ const Header = () => {
                </>
             )}
             {isAuthenticated && (
-               <HeaderItem onClick={() => signOut(auth)}>Sair</HeaderItem>
+               <HeaderItem onClick={handleSignOutClick}>Sair</HeaderItem>
             )}
             <HeaderItem>
                <BsCart3 size={25} onClick={toggleCart}/>

@@ -2,6 +2,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth"
 import { collection, getDocs, query, where } from "firebase/firestore"
+import { useDispatch } from "react-redux"
 
 // Pages
 import HomePage from "./pages/home/home.page"
@@ -11,8 +12,6 @@ import ExplorePage from "./pages/explore/explore.page"
 
 // Utilities
 import {auth, db} from './config/firebase.config'
-import { userContext } from "./context/user.context"
-import { useContext, useState } from "react"
 import { userConverter } from "./converters/firestore.converters"
 
 // Components
@@ -22,34 +21,40 @@ import Cart from "./components/cart/cart.component"
 import CheckoutPage from "./pages/checkout/checkout.page"
 import AuthenticationGuard from "./components/guard/authentication.guard"
 import PaymentConfirmationPage from "./pages/payment-confirmation/payment-confirmation"
+import { useSelector } from "react-redux"
+import { useEffect, useState } from "react"
 
 const App = () => {
 
   const [isInitializing, setIsInitializing] = useState(true);
 
-  const { isAuthenticated, loginUser, logoutUser } = useContext(userContext)
+  const dispatch = useDispatch();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const {isAuthenticated} = useSelector((rootReducer: any) => rootReducer.userReducer)
 
-  // Essa função é chamada sempre que o usuário fazer login na Firebase.
-  onAuthStateChanged(auth, async (user) => {
-    
-    // Caso o usuário esteja autenticado, mas não possua dados de usuário da Firebase: Desloga
-    const isSigninOut = isAuthenticated && !user
-    if(isSigninOut){
-      logoutUser()
-      return setIsInitializing(true)
-    }
+  useEffect(() => {
+    // Essa função é chamada sempre que o usuário fazer login na Firebase.
+    onAuthStateChanged(auth, async (user) => {
+      
+      // Caso o usuário esteja autenticado, mas não possua dados de usuário da Firebase: Desloga
+      const isSigninOut = isAuthenticated && !user
+      if(isSigninOut){
+        dispatch({type:'LOGOUT_USER'})
+        return setIsInitializing(true)
+      }
 
-    // Caso o usuário não esteja autenticado, mas possua dados de usuário da Firebase: Loga
-    const isSigningIn = !isAuthenticated && user
-    if(isSigningIn){
-      const querySnapshot = await getDocs(query(collection(db,'users').withConverter(userConverter), where('id', '==',user.uid)))
-      const userFromFirestore = querySnapshot.docs[0]?.data()
-      loginUser(userFromFirestore)
+      // Caso o usuário não esteja autenticado, mas possua dados de usuário da Firebase: Loga
+      const isSigningIn = !isAuthenticated && user
+      if(isSigningIn){
+        const querySnapshot = await getDocs(query(collection(db,'users').withConverter(userConverter), where('id', '==',user.uid)))
+        const userFromFirestore = querySnapshot.docs[0]?.data()
+        dispatch({type:'LOGIN_USER', payload: userFromFirestore})
+        return setIsInitializing(false) 
+      }
+
       return setIsInitializing(false) 
-    }
-
-    return setIsInitializing(false) 
-  })
+    })
+  },[dispatch])
 
   // Garante que a aplicação só será mostrada após inicializar
   if (isInitializing) return <Loading />;
