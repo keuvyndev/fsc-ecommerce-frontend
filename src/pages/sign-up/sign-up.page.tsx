@@ -21,7 +21,7 @@ import {
   SignUpHeadline,
   SignUpInputContainer
 } from './sign-up.styles'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../hooks/redux.hooks'
 
 interface SignUpForm {
   firstName: string
@@ -33,8 +33,7 @@ interface SignUpForm {
 
 const SignUpPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const {isAuthenticated} = useSelector((rootReducer: any) => rootReducer.userReducer)
+  const {isAuthenticated} = useAppSelector((rootReducer) => rootReducer.userReducer)
   const navigate = useNavigate()
 
   useEffect(()=>{

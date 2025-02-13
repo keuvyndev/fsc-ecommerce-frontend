@@ -1,7 +1,7 @@
 import { BsCart3 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { logout } from "../../store/reducers/user/user.actions";
+import { logoutUser } from "../../store/reducers/user/user.actions";
 
 // Styles
 import { HeaderContainer, HeaderItem, HeaderItems, HeaderTitle } from "./header.styles";
@@ -39,7 +39,7 @@ const Header = () => {
    }
 
    const handleSignOutClick = () => {
-      dispatch(logout())
+      dispatch(logoutUser())
       signOut(auth)
    }
 

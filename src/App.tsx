@@ -2,7 +2,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth"
 import { collection, getDocs, query, where } from "firebase/firestore"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
 
 // Pages
@@ -14,7 +14,8 @@ import ExplorePage from "./pages/explore/explore.page"
 // Utilities
 import {auth, db} from './config/firebase.config'
 import { userConverter } from "./converters/firestore.converters"
-import { loginUser, logout } from "./store/reducers/user/user.actions"
+import { loginUser, logoutUser } from "./store/reducers/user/user.actions"
+import { useAppSelector } from "./hooks/redux.hooks"
 
 // Components
 import Loading from "./components/loading/loading.component"
@@ -29,8 +30,8 @@ const App = () => {
   const [isInitializing, setIsInitializing] = useState(true);
 
   const dispatch = useDispatch();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const {isAuthenticated} = useSelector((rootReducer: any) => rootReducer.userReducer)
+   
+  const {isAuthenticated} = useAppSelector((rootReducer) => rootReducer.userReducer)
 
   useEffect(() => {
     // Essa função é chamada sempre que o usuário fazer login na Firebase.
@@ -39,7 +40,7 @@ const App = () => {
       // Caso o usuário esteja autenticado, mas não possua dados de usuário da Firebase: Desloga
       const isSigninOut = isAuthenticated && !user
       if(isSigninOut){
-        dispatch(logout())
+        dispatch(logoutUser())
         return setIsInitializing(true)
       }
 

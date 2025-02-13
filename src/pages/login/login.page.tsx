@@ -24,7 +24,7 @@ import {
   LoginInputContainer,
   LoginSubtitle
 } from './login.styles'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../hooks/redux.hooks'
 
 interface LoginForm {
   email: string
@@ -34,7 +34,7 @@ interface LoginForm {
 const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
-  const {isAuthenticated} = useSelector((rootReducer: any) => rootReducer.userReducer)
+  const {isAuthenticated} = useAppSelector((rootReducer) => rootReducer.userReducer)
   const navigate = useNavigate()
 
   useEffect(()=>{
