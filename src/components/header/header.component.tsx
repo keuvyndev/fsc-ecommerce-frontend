@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase.config";
+import { toggleCart } from "../../store/reducers/cart/cart.actions";
 
 const Header = () => {  
 
@@ -18,7 +19,7 @@ const Header = () => {
    const dispatch = useDispatch();
 
 
-   const {toggleCart, productsCount} = useContext(CartContext);
+   const { productsCount} = useContext(CartContext);
 
    const navigate = useNavigate();
 
@@ -43,6 +44,10 @@ const Header = () => {
       signOut(auth)
    }
 
+   const handleCartClick = () => {
+      dispatch(toggleCart())
+   }
+
   return (
    <>
       <HeaderContainer>
@@ -60,7 +65,7 @@ const Header = () => {
                <HeaderItem onClick={handleSignOutClick}>Sair</HeaderItem>
             )}
             <HeaderItem>
-               <BsCart3 size={25} onClick={toggleCart}/>
+               <BsCart3 size={25} onClick={handleCartClick}/>
                <p style={{marginLeft: 5}}>{productsCount}</p>
             </HeaderItem>
          </HeaderItems>

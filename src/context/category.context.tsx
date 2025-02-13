@@ -51,7 +51,7 @@ const CategoryContextProvider: React.FC <ICategoryProps> = ({children}) => {
    }
 
 
-   console.log(categories)
+   //console.log(categories)
 
    return (
       <CategoryContext.Provider value ={{categories, fetchCategories, isLoading}}>

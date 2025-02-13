@@ -7,25 +7,35 @@ import CartItem from '../cart-item/cart-item.component';
 
 // Utilities
 import { CartContext } from '../../context/cart.context';
+import { toggleCart } from '../../store/reducers/cart/cart.actions';
 
 // Styles
 import { CartContainer, CartContent, CartEscapeArea, CartTitle, CartTotal } from "./cart.styles";
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/redux.hooks';
+import { useDispatch } from 'react-redux';
 
 const Cart = () => {
 
-   const {isVisible, toggleCart, products, productsTotalPrice, productsCount} = useContext(CartContext)
+   const {isVisible, products} = useAppSelector(state => state.cartReducer);
+   const dispatch = useDispatch();
+
+   const {productsTotalPrice, productsCount} = useContext(CartContext)
    const navigate = useNavigate();
 
    const handleGoToCheckout = () => {
-      toggleCart()
+      dispatch(toggleCart())
       navigate('/checkout')
+   }
+
+   const handleEscapeAreaClick = () => {
+      dispatch(toggleCart())
    }
 
    return ( 
       <>
          <CartContainer isVisible = {isVisible}>
-            <CartEscapeArea onClick={toggleCart} />
+            <CartEscapeArea onClick={handleEscapeAreaClick} />
                <CartContent>
                   <CartTitle> Seu carrinho </CartTitle>
                      {products.map((product) => <CartItem key={product.id} product={product}/>)}
