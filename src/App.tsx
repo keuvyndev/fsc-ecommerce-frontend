@@ -2,7 +2,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth"
 import { collection, getDocs, query, where } from "firebase/firestore"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect, useState } from "react"
 
 // Pages
 import HomePage from "./pages/home/home.page"
@@ -13,6 +14,7 @@ import ExplorePage from "./pages/explore/explore.page"
 // Utilities
 import {auth, db} from './config/firebase.config'
 import { userConverter } from "./converters/firestore.converters"
+import { loginUser, logout } from "./store/reducers/user/user.actions"
 
 // Components
 import Loading from "./components/loading/loading.component"
@@ -21,8 +23,6 @@ import Cart from "./components/cart/cart.component"
 import CheckoutPage from "./pages/checkout/checkout.page"
 import AuthenticationGuard from "./components/guard/authentication.guard"
 import PaymentConfirmationPage from "./pages/payment-confirmation/payment-confirmation"
-import { useSelector } from "react-redux"
-import { useEffect, useState } from "react"
 
 const App = () => {
 
@@ -39,7 +39,7 @@ const App = () => {
       // Caso o usuário esteja autenticado, mas não possua dados de usuário da Firebase: Desloga
       const isSigninOut = isAuthenticated && !user
       if(isSigninOut){
-        dispatch({type:'LOGOUT_USER'})
+        dispatch(logout())
         return setIsInitializing(true)
       }
 
@@ -48,7 +48,7 @@ const App = () => {
       if(isSigningIn){
         const querySnapshot = await getDocs(query(collection(db,'users').withConverter(userConverter), where('id', '==',user.uid)))
         const userFromFirestore = querySnapshot.docs[0]?.data()
-        dispatch({type:'LOGIN_USER', payload: userFromFirestore})
+        dispatch(loginUser(userFromFirestore))
         return setIsInitializing(false) 
       }
 
