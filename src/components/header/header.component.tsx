@@ -1,11 +1,11 @@
 import { BsCart3 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { logoutUser } from "../../store/reducers/user/user.actions";
+import { useAppSelector } from "../../hooks/redux.hooks";
+import { selectProductsCount } from "../../store/reducers/cart/cart.selectors";
 
 // Styles
 import { HeaderContainer, HeaderItem, HeaderItems, HeaderTitle } from "./header.styles";
-import { CartContext } from "../../context/cart.context";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { signOut } from "firebase/auth";
@@ -16,10 +16,8 @@ const Header = () => {
 
    // eslint-disable-next-line @typescript-eslint/no-explicit-any
    const {isAuthenticated} = useSelector((rootReducer:any) => rootReducer.userReducer);
+   const productsCount = useAppSelector(selectProductsCount);
    const dispatch = useDispatch();
-
-
-   const { productsCount} = useContext(CartContext);
 
    const navigate = useNavigate();
 
