@@ -18,7 +18,6 @@ const Header = () => {
    const {isAuthenticated} = useSelector((rootReducer:any) => rootReducer.userReducer);
    const productsCount = useAppSelector(selectProductsCount);
    const dispatch = useDispatch();
-
    const navigate = useNavigate();
 
    const handleLoginClick = () => {

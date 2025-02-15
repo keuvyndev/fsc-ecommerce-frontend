@@ -1,6 +1,8 @@
-import { FunctionComponent, useContext, useEffect } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineHome } from 'react-icons/ai'
+import { useDispatch } from "react-redux";
+import { clearCartProducts } from "../../store/reducers/cart/cart.actions";
 
 // Components
 import Header from "../../components/header/header.component";
@@ -9,12 +11,13 @@ import Header from "../../components/header/header.component";
 import { PaymentConfirmationContainer, PaymentConfirmationContent } from "./payment-confirmation.styles";
 import Colors from "../../theme/theme.colors";
 import CustomButton from "../../components/custom-button/custom-buttom.component";
-import { CartContext } from "../../context/cart.context";
 
 const PaymentConfirmationPage: FunctionComponent = () => {
    
    const [searchParams] = useSearchParams();
-   const {clearProducts} = useContext(CartContext)
+
+   const dispatch = useDispatch();
+
    const navigate = useNavigate();
    const status = searchParams.get('success')
    const isCanceled = searchParams.get('canceled') === 'true'
@@ -22,7 +25,7 @@ const PaymentConfirmationPage: FunctionComponent = () => {
    // Se o pagamento for confirmado o carrinho será limpado
    useEffect(()=>{
       if(status === 'true'){
-         clearProducts();
+         dispatch(clearCartProducts())
       }
    }, [status])
 
