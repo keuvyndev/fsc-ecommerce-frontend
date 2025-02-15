@@ -12,5 +12,10 @@ export default [
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   pluginReact.configs.flat['jsx-runtime'],
-  { "rules": { "react/prop-types": "off" } }
+  {
+    "rules": {
+      "react/prop-types": "off",
+      "@typescript-eslint/no-explicit-any": "off"
+    }
+  }
 ];

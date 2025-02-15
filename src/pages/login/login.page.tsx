@@ -1,19 +1,21 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BsGoogle } from 'react-icons/bs'
 import { FiLogIn } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
 import validator from 'validator'
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
+import {
+  AuthError,
+  AuthErrorCodes,
+  signInWithEmailAndPassword,
+  signInWithPopup
+} from 'firebase/auth'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AuthError, AuthErrorCodes, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
-import { auth, db, googleProvider } from '../../config/firebase.config'
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 
 // Components
 import CustomInput from '../../components/custom-input/custom-input.component'
 import Header from '../../components/header/header.component'
 import InputErrorMessage from '../../components/input-error-message/input-error-message.component'
-import CustomButton from '../../components/custom-button/custom-buttom.component'
 import Loading from '../../components/loading/loading.component'
 
 // Styles
@@ -24,7 +26,11 @@ import {
   LoginInputContainer,
   LoginSubtitle
 } from './login.styles'
+
+// Utilities
+import { auth, db, googleProvider } from '../../config/firebase.config'
 import { useAppSelector } from '../../hooks/redux.hooks'
+import CustomButton from '../../components/custom-button/custom-buttom.component'
 
 interface LoginForm {
   email: string
@@ -32,57 +38,77 @@ interface LoginForm {
 }
 
 const LoginPage = () => {
-
-  const [isLoading, setIsLoading] = useState(false);
-  const {isAuthenticated} = useAppSelector((rootReducer) => rootReducer.userReducer)
-  const navigate = useNavigate()
-
-  useEffect(()=>{
-    if(isAuthenticated){
-      navigate('/')
-    }
-  },[isAuthenticated])
-
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    setError
+    setError,
+    formState: { errors }
   } = useForm<LoginForm>()
 
-  // Efetua o Login do usuário no Firebase
-  const handleSubmitPress = async (data: any) => {
+  const [isLoading, setIsLoading] = useState(false)
+
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
+  )
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/')
+    }
+  }, [isAuthenticated])
+
+  const handleSubmitPress = async (data: LoginForm) => {
     try {
       setIsLoading(true)
-      const userCredentials = await signInWithEmailAndPassword(auth, data.email, data.password);
-      console.log(userCredentials)
+
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      )
+
+      console.log({ userCredentials })
     } catch (error) {
       const _error = error as AuthError
-      if(_error.code === AuthErrorCodes.INVALID_PASSWORD){
-        return setError('password', {type: 'mismatch'})
-      } 
-      
-      if (_error.code === AuthErrorCodes.USER_DELETED){
-        return setError('email', {type: 'notFound'})
+
+      if (_error.code === AuthErrorCodes.INVALID_PASSWORD) {
+        return setError('password', { type: 'mismatch' })
+      }
+
+      if (_error.code === AuthErrorCodes.USER_DELETED) {
+        return setError('email', { type: 'notFound' })
       }
     } finally {
       setIsLoading(false)
     }
   }
 
-  // Efetua login com o google usando Firebase
-  const handleSignInWithGoogleProvider = async () => {
+  const handleSignInWithGooglePress = async () => {
     try {
       setIsLoading(true)
-      const userCredentials = await signInWithPopup(auth, googleProvider);
-      const querySnapshot = await getDocs(query(collection(db, 'users'), where('id','==',userCredentials.user.uid)))
+
+      const userCredentials = await signInWithPopup(auth, googleProvider)
+
+      const querySnapshot = await getDocs(
+        query(
+          collection(db, 'users'),
+          where('id', '==', userCredentials.user.uid)
+        )
+      )
+
       const user = querySnapshot.docs[0]?.data()
-      if(!user){
+
+      if (!user) {
+        const firstName = userCredentials.user.displayName?.split(' ')[0]
+        const lastName = userCredentials.user.displayName?.split(' ')[1]
+
         await addDoc(collection(db, 'users'), {
           id: userCredentials.user.uid,
           email: userCredentials.user.email,
-          firstName: userCredentials.user.displayName?.split(' ')[0],
-          lastNAme: userCredentials.user.displayName?.split(' ')[1],
+          firstName,
+          lastName,
           provider: 'google'
         })
       }
@@ -97,13 +123,15 @@ const LoginPage = () => {
     <>
       <Header />
 
-      {isLoading && <Loading /> }
+      {isLoading && <Loading />}
 
       <LoginContainer>
         <LoginContent>
           <LoginHeadline>Entre com a sua conta</LoginHeadline>
 
-          <CustomButton startIcon={<BsGoogle size={18} onClick={handleSignInWithGoogleProvider} />}>
+          <CustomButton
+            startIcon={<BsGoogle size={18} />}
+            onClick={handleSignInWithGooglePress}>
             Entrar com o Google
           </CustomButton>
 
@@ -126,15 +154,15 @@ const LoginPage = () => {
               <InputErrorMessage>O e-mail é obrigatório.</InputErrorMessage>
             )}
 
-            {errors?.email?.type === 'validate' && (
-              <InputErrorMessage>
-                Por favor, insira um e-mail válido.
-              </InputErrorMessage>
-            )}
-
             {errors?.email?.type === 'notFound' && (
               <InputErrorMessage>
                 O e-mail não foi encontrado.
+              </InputErrorMessage>
+            )}
+
+            {errors?.email?.type === 'validate' && (
+              <InputErrorMessage>
+                Por favor, insira um e-mail válido.
               </InputErrorMessage>
             )}
           </LoginInputContainer>
@@ -151,8 +179,9 @@ const LoginPage = () => {
             {errors?.password?.type === 'required' && (
               <InputErrorMessage>A senha é obrigatória.</InputErrorMessage>
             )}
+
             {errors?.password?.type === 'mismatch' && (
-              <InputErrorMessage>A senha está incorreta.</InputErrorMessage>
+              <InputErrorMessage>A senha é inválida.</InputErrorMessage>
             )}
           </LoginInputContainer>
 

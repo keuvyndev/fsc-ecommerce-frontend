@@ -4,7 +4,7 @@ import CartActionTypes from "./cart.action-types";
 interface ToggleCartAction {
    type: typeof CartActionTypes.toggleCart
 }
-export const toggleCart = () :ToggleCartAction => ({
+export const toggleCart = () => ({
    type: CartActionTypes.toggleCart
 })
 interface AddProductToCart {
@@ -12,7 +12,7 @@ interface AddProductToCart {
    payload: Product
 }
 
-export const addProductToCart = (payload: Product):AddProductToCart => ({
+export const addProductToCart = (payload: Product) => ({
    type: CartActionTypes.addProductToCart,
    payload
 })
@@ -22,7 +22,7 @@ interface RemoveProductFromCart {
    payload: string
 }
 
-export const removeProductFromCart = (payload: string):RemoveProductFromCart => ({
+export const removeProductFromCart = (payload: string) => ({
    type: CartActionTypes.removeProductFromCart,
    payload
 })
@@ -32,7 +32,7 @@ interface IncreaseCartProductQuantity {
    payload: string
 }
 
-export const increaseCartProductQuantity = (payload: string): IncreaseCartProductQuantity => ({
+export const increaseCartProductQuantity = (payload: string) => ({
    type: CartActionTypes.increaseCartProductQuantity,
    payload
 })
@@ -42,7 +42,7 @@ interface DecreaseCartProductQuantity {
    payload: string
 }
 
-export const decreaseCartProductQuantity = (payload: string): DecreaseCartProductQuantity => ({
+export const decreaseCartProductQuantity = (payload: string) => ({
    type: CartActionTypes.decreaseCartProductQuantity,
    payload
 }) 
@@ -51,7 +51,7 @@ interface ClearCartProducts {
    type: typeof CartActionTypes.clearCartProducts
 }
 
-export const clearCartProducts = (): ClearCartProducts => ({
+export const clearCartProducts = () => ({
    type: CartActionTypes.clearCartProducts
 })
 

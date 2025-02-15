@@ -40,7 +40,9 @@ const cartReducer = (state = initalState, action: CartActions): InitialState => 
          }
 
          // Se não -> adicioná-lo
-         return {...state, products:[{ ...product, quantity: 1}]}
+         return {
+            ...state,
+             products: [...state.products, { ...product, quantity: 1 }]}
      
       }
       case CartActionTypes.removeProductFromCart:
