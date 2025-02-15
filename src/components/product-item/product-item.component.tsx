@@ -8,7 +8,7 @@ import Product from "../../types/product.types";
 import { ProductContainer, ProductImage, ProductInfo } from "./product-item.styles";
 import CustomButton from "../custom-button/custom-buttom.component";
 import { useDispatch } from "react-redux";
-import { addProductToCart } from "../../store/reducers/cart/cart.actions";
+import { addProductToCart } from "../../store/toolkit/cart/cart.slice"; 
 
 interface ProductItemProps{
    product: Product

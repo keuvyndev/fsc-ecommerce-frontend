@@ -5,7 +5,7 @@ import CustomButton from "../custom-button/custom-buttom.component";
 import CartItem from '../cart-item/cart-item.component';
 
 // Utilities
-import { toggleCart } from '../../store/reducers/cart/cart.actions';
+import { toggleCart } from '../../store/toolkit/cart/cart.slice';
 import { selectProductsCount, selectProductsTotalPrice } from '../../store/reducers/cart/cart.selectors';
 
 // Styles

@@ -7,7 +7,7 @@ import CartProduct from "../../types/cart.types";
 // Styles
 import { CartItemContainer, CartItemImage, CartItemInfo, CartItemQuantity, RemoveButton } from "./cart-item.styles";
 import { useDispatch } from "react-redux";
-import { decreaseCartProductQuantity, increaseCartProductQuantity, removeProductFromCart } from "../../store/reducers/cart/cart.actions";
+import { decreaseCartProductQuantity, increaseCartProductQuantity, removeProductFromCart } from "../../store/toolkit/cart/cart.slice";
 
 interface CartItemProps{
    product:CartProduct
