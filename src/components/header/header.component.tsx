@@ -1,6 +1,6 @@
 import { BsCart3 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { logoutUser } from "../../store/reducers/user/user.actions";
+import { logoutUser } from "../../store/toolkit/user/user.slice";
 import { useAppSelector } from "../../hooks/redux.hooks";
 import { selectProductsCount } from "../../store/reducers/cart/cart.selectors";
 
@@ -14,7 +14,7 @@ import { toggleCart } from "../../store/reducers/cart/cart.actions";
 
 const Header = () => {  
 
-   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    
    const {isAuthenticated} = useSelector((rootReducer:any) => rootReducer.userReducer);
    const productsCount = useAppSelector(selectProductsCount);
    const dispatch = useDispatch();

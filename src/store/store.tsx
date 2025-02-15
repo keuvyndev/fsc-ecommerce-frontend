@@ -1,4 +1,5 @@
-import { legacy_createStore as createStore, applyMiddleware } from 'redux';
+// import { legacy_createStore as createStore, applyMiddleware } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 
 import logger from 'redux-logger'
 
@@ -18,12 +19,22 @@ const persistConfig = {
   whitelist: ['cartReducer']
 };
 
-const persistRootReducer = persistReducer(persistConfig, rootReducer);
+const persistedRootReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = createStore(
-  persistRootReducer,
-  applyMiddleware(logger, thunk)
-);
+// export const store = createStore(
+//   persistRootReducer,
+//   applyMiddleware(logger, thunk)
+// );
+
+export const store = configureStore({
+  reducer: persistedRootReducer,
+  middleware(getDefaultMiddleware) {
+    return getDefaultMiddleware().concat(
+      logger,
+      thunk
+    );
+  },
+})
 
 
 export const persistedStore = persistStore(store);

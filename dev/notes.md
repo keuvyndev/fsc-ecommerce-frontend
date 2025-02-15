@@ -86,6 +86,8 @@
       - yarn add -D @types/redux-logger
       - yarn add redux-persist
       - yarn add redux-thunk
+   - Redux ToolKit
+      - yarn add @reduxjs/toolkit
 
 > Snippet
    - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)
