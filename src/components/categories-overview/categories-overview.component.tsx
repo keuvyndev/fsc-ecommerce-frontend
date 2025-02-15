@@ -8,7 +8,7 @@ import CategoryOverview from "../category-overview/category-overview.component";
 import Loading from "../loading/loading.component";
 import { useAppSelector } from "../../hooks/redux.hooks";
 import { useDispatch } from "react-redux";
-import { fetchCategories } from "../../store/reducers/category/category.actions";
+import { fetchCategories } from "../../store/toolkit/category/category.slice";
 
 const CategoriesOverview = () => {
 
