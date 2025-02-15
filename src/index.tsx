@@ -5,7 +5,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import CategoryContextProvider from './context/category.context';
 import { store, persistedStore } from './store/store';
 
 // @ts-expect-error(no support for redux-persist)
@@ -18,9 +17,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistedStore}>
-        <CategoryContextProvider>
-              <App />
-          </CategoryContextProvider>
+        <App />
       </PersistGate>
     </Provider>
   </React.StrictMode>
