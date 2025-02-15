@@ -6,8 +6,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import CategoryContextProvider from './context/category.context';
-import { CartContextProvider } from './context/cart.context';
-import store from './store/store';
+import { store, persistedStore } from './store/store';
+
+// @ts-expect-error(no support for redux-persist)
+import { PersistGate } from 'redux-persist/integration/react'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,11 +17,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <CategoryContextProvider>
-          <CartContextProvider>
-            <App />
-          </CartContextProvider>
-        </CategoryContextProvider>
+      <PersistGate persistor={persistedStore}>
+        <CategoryContextProvider>
+              <App />
+          </CategoryContextProvider>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

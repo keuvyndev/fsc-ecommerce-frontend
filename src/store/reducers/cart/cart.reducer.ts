@@ -79,7 +79,8 @@ const cartReducer = (state = initalState, action: any) => {
          products: []
       }
       default:
-         return { ...state}
+         return state // For redux-persist
+         //return { ...state}
    }
    
 }

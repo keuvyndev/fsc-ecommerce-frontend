@@ -84,6 +84,7 @@
       - yarn add -D @types/react-redux
       - yarn add redux-logger (Requer configuração adicional com applyMiddleWare no store.tsx)
       - yarn add -D @types/redux-logger
+      - yarn add redux-persist
 
 > Snippet
    - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)

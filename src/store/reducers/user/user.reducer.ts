@@ -31,11 +31,9 @@ const userReducer = (state = initialState, action: UserActions) : InitialState =
             isAuthenticated: false 
          }
       // Obrigatório em todos os reducers
-      default:
-         return {
-            ... state
-         }
-   }
+         default:
+            return state
+      }
 }
 
-export default userReducer;   
+export default userReducer;
