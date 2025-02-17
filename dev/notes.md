@@ -88,6 +88,8 @@
       - yarn add redux-thunk
    - Redux ToolKit
       - yarn add @reduxjs/toolkit
+   - Testes com Jest & Testing Library
+      - yarn test
 
 > Snippet
    - Digite: exsc, depois Crtl+Espaço (Cria modelo base para no style component)
