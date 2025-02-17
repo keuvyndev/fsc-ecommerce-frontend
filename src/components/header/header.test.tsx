@@ -1,9 +1,10 @@
-import { render } from "@testing-library/react"
 import Header from "./header.component"
+import rootReducer from "../../store/root-reducer"
+import CartProduct from "../../types/cart.types"
+import { render } from "@testing-library/react"
 import { BrowserRouter } from "react-router-dom"
 import { Provider } from "react-redux"
 import { configureStore } from "@reduxjs/toolkit"
-import rootReducer from "../../store/root-reducer"
 import { renderWithRedux } from "../../helpers/test.helpers"
 
 describe('header' , () => {
@@ -40,5 +41,34 @@ describe('header' , () => {
 
       getByText(/Login/i)
       getByText(/criar login/i)
+   })
+
+   it('should show correct cart products count', () => {
+      const products: CartProduct[] = [
+         {
+            id: '1',
+            imageUrl: 'image_url',
+            name: 'Boné',
+            price: 100,
+            quantity: 10
+         },
+         {
+            id: '2',
+            imageUrl: 'image_url',
+            name: 'Boné',
+            price: 100,
+            quantity: 12
+         },
+      ]
+
+      const {getByText} = renderWithRedux(<Header />, {
+         preloadedState: {
+            cartReducer: {
+               products
+            }
+         } as any
+      })
+
+      getByText('22')
    })
 })
