@@ -20,8 +20,14 @@ export const CategoryItemContainer = styled.div<CategoryItemContainerProps>`
    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
    background-color: rgba(0, 0, 0, 0.3);
    background-blend-mode: color;
-   background-image: ${(props) => `url('${props.backgroundimg}')`}
-`;
+   background-image: ${(props) => `url('${props.backgroundimg}')`};
+   
+   @media (max-width: 768px) {
+      padding: 0 50px 0 50px;
+      height: 300px
+   }
+   `;
+  
 
 export const CategoryName = styled.div`
    color: ${Colors.text.white};
