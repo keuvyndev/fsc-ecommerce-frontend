@@ -18,7 +18,7 @@ export const renderWithRedux = (
          }), 
          ... renderOptions
       }: {
-         preloadedState: RootState,
+         preloadedState?: Partial<RootState>,
          store?: any,
       }
    ) => {
