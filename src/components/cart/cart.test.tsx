@@ -61,6 +61,7 @@ describe('Cart' , () => {
       const increaseButton = getByLabelText(/increase quantity of boné/i)
       userEvent.click(increaseButton)
       getByText('3')
+      getByText('Total: R$ 300')
    })
 
    it('should decrease product quantity on decrease click', () => {
@@ -80,7 +81,9 @@ describe('Cart' , () => {
       const decreaseButton = getByLabelText(/decrease quantity of boné/i)
       userEvent.click(decreaseButton)
       getByText('1')
+      getByText('Total: R$ 100')
    })
+
    it('should remove product on remove click', () => {
       const {queryByText, getByLabelText, getByText} = renderWithRedux(<Cart />, {
          preloadedState: {
