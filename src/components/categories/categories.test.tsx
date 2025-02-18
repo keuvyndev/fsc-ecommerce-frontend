@@ -10,7 +10,7 @@ describe('Categories', () => {
 
       const mockedFirestore = firestore as any
 
-      mockedFirestore.getDocs.mockReturnValue([
+      mockedFirestore.getDocs.mockImplementation( async () => [
          {
             data(){
                return {
@@ -21,9 +21,9 @@ describe('Categories', () => {
          }
       ])
 
-      mockedFirestore.collection.mockReturnValue({
+      mockedFirestore.collection.mockImplementation(() =>({
          withConverter: () => {}
-      })
+      }))
 
       const {getByText, findByText} = renderWithRedux(<Categories />, {})
 
