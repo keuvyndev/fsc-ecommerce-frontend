@@ -15,7 +15,9 @@ export default [
   {
     "rules": {
       "react/prop-types": "off",
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
+      "rest-spread-spacing": "off",
+      "react-hooks/exhaustive-deps": "off",
     }
   }
 ];

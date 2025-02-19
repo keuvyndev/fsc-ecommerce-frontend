@@ -24,7 +24,7 @@ const ProductItem:FunctionComponent<ProductItemProps> = ({product}) => {
 
    return ( 
       <ProductContainer>
-         <ProductImage imageUrl={product.imageUrl} >
+         <ProductImage $imageurl={product.imageUrl} >
             <CustomButton startIcon={<BsCartPlus />} onClick={handleAddToCartClick}>Adicionar ao Carrinho</CustomButton>
          </ProductImage>
          <ProductInfo>

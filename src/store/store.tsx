@@ -28,13 +28,13 @@ const persistedRootReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedRootReducer,
-  middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware().concat(
-      logger,
-      thunk
-    );
-  },
-})
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+      },
+    }).concat(logger, thunk),
+});
 
 
 export const persistedStore = persistStore(store);

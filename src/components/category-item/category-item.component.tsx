@@ -21,7 +21,7 @@ const CategoryItem: FunctionComponent<CategoryItemProps> = ({category}) => {
 
    return ( 
       <>
-      <CategoryItemContainer backgroundimg={category.imageUrl}>
+      <CategoryItemContainer $backgroundimg={category.imageUrl}>
          <CategoryName onClick={handleExploreClick}>
             <p>{category.displayName}</p>
             <p>Explorar</p>

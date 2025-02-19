@@ -2,8 +2,10 @@ import styled from 'styled-components'
 import Colors from '../../theme/theme.colors'
 
 interface CartContainerPros {
-  isVisible: boolean
+  $isvisible: string
 }
+
+const mustBeVisible = (props: any): boolean => props.$isvisible === 'true';
 
 export const CartContainer = styled.div<CartContainerPros>`
   position: fixed;
@@ -16,8 +18,8 @@ export const CartContainer = styled.div<CartContainerPros>`
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: flex-end;
-  visibility: ${(props) => (props.isVisible ? 'visible' : 'hidden')};
-  opacity: ${(props) => (props.isVisible ? '1' : '0')};
+  visibility: ${props => mustBeVisible(props) ? 'visible' : 'hidden'};
+  opacity: ${props => mustBeVisible(props) ? '1' : '0'};
   transition: all 0.3s ease;
 
   p {

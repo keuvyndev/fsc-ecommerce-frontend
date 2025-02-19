@@ -32,8 +32,8 @@ const cartSlice = createSlice({
             state.products = state.products.map((item) => 
 
                // Ao identificar o item incrementa, caso não seja o item, o mantém na lista
-               item.id === product.id ? {...item, quantity: item.quantity + 1} 
-               : {... item}
+               item.id === product.id ? {...item, quantity: item.quantity + 1}
+               :{...item}
             )
 
             return

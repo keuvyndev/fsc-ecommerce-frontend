@@ -55,7 +55,7 @@ const App = () => {
 
       return setIsInitializing(false) 
     })
-  },[dispatch])
+  },[isAuthenticated, dispatch])
 
   // Garante que a aplicação só será mostrada após inicializar
   if (isInitializing) return <Loading />;

@@ -35,7 +35,7 @@ const Cart = () => {
 
    return ( 
       <>
-         <CartContainer isVisible = {isVisible}>
+         <CartContainer $isvisible={isVisible.toString()}>
             <CartEscapeArea onClick={handleEscapeAreaClick} />
                <CartContent>
                   <CartTitle> Seu carrinho </CartTitle>
