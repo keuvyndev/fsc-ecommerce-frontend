@@ -1,23 +1,26 @@
-name: Deploy
-
+name: Render CLI Deploy
+run-name: Deploying via Render CLI
+# Run this workflow when code is pushed to the main branch.
 on:
   push:
     branches:
       - main
-
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      # Instalar o Heroku CLI
-      - name: Install Heroku CLI
-        run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
-
-      - uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "fsc-ecommerce-frontend" # Nome único no Heroku.
-          heroku_email: "keuvyntdev@gmail.com" # Seu email.
+  Deploy-Render:
+      runs-on: ubuntu-latest
+      steps:
+        # Downloads the Render CLI binary and adds it to the PATH.
+        # To prevent breaking changes in CI/CD, we pin to a
+        # specific CLI version (in this case 1.1.0).
+        - name: Install Render CLI
+          run: |
+            curl -L https://github.com/render-oss/cli/releases/download/v1.1.0/cli_1.1.0_linux_amd64.zip -o render.zip
+            unzip render.zip
+            sudo mv cli_v1.1.0 /usr/local/bin/render
+        - name: Trigger deploy with Render CLI
+          env:
+            # The CLI can authenticate via a Render API key without logging in.
+            RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+            CI: true
+          run: |
+            render deploys create ${{ secrets.RENDER_SERVICE_ID }} --output json --confirm
